@@ -1,22 +1,27 @@
 plugins {
-    kotlin("js") version "1.8.0"
+    kotlin("multiplatform") version "2.0.0"
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation(kotlin("stdlib-js"))
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.3.1-pre.754")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.3.1-pre.754")
-}
-
-
 kotlin {
     js(IR) {
-        browser {
-            binaries.executable()
+        binaries.executable()
+        browser()
+    }
+
+    sourceSets {
+        named("jsMain") {
+            dependencies {
+                implementation(project.dependencies.platform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.706"))
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-mui-material")
+            }
         }
     }
 }
+
